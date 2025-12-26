@@ -23,6 +23,7 @@ export default class OrthoScene {
         this.mouse = new THREE.Vector2(0,0); // in NDC
         this.mouseVelocity = new THREE.Vector2(0,0); // in NDC
         this.resolution = new THREE.Vector2(this.w, this.h);
+        this.time = 0;
 
         
         this.setup();
@@ -38,7 +39,11 @@ export default class OrthoScene {
 
     async createObjs(){}
 
-    async animate() {}
+    async animate() {
+
+
+        this.time = this.clock.getElapsedTime();
+    }
 
     async mouse() {
 
