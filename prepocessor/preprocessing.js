@@ -1,6 +1,8 @@
 
 import { readFile } from "../util/util.js";
 
+const HEADER_DECL_RE = /^\s*(uniform|varying)\b[^;]*;/gm;
+
 
 
 //achtung \s machted auch linebreaks
@@ -34,7 +36,10 @@ function expect(str, expectedStr) {
 
 
 //es gibt kein Import in glsl also baue ich es einfach selber 
-export async function Preprocessor(path) {
+export async function Preprocessor(path, scope = new Set()) {
+
+
+
     
     let shader = await readFile(path);
     let currentIndex = 0;
@@ -149,44 +154,50 @@ export async function Preprocessor(path) {
 
 
 
-        if(currentToken.value == "import") {
-        
-            header = header.slice(0, currentToken.start - offset) + header.slice(currentToken.start - offset + currentToken.value.length); //remove import statement
-        
+        if (currentToken.value == "import") {
 
-            offset +=  currentToken.value.length;
+            // entfernt import "file";
+            header = header.slice(0, currentToken.start - offset) +
+                    header.slice(currentToken.start - offset + currentToken.value.length);
+
+            offset += currentToken.value.length;
             currentIndexToken++;
             currentToken = tokens[currentIndexToken];
-            
+
             expectString(currentToken.value);
 
+            header = header.slice(0, currentToken.start - offset) +
+                    header.slice(currentToken.start - offset + currentToken.value.length + 1);
 
-            header = header.slice(0, currentToken.start - offset) + header.slice(currentToken.start - offset + currentToken.value.length + 1); //remove str + "
+            offset += currentToken.value.length + 1;
 
-            offset +=  currentToken.value.length + 1;
-            
             const path = currentToken.value.substring(1, currentToken.value.length - 1);
-
 
             currentIndexToken++;
             currentToken = tokens[currentIndexToken];
-
 
             expect(currentToken.value, ";");
 
-            header = header.slice(0, currentToken.start- offset) + header.slice(currentToken.start - offset + currentToken.value.length); //;
+            header = header.slice(0, currentToken.start - offset) +
+                    header.slice(currentToken.start - offset + currentToken.value.length);
 
+            offset += currentToken.value.length;
 
-            offset +=  currentToken.value.length;
-            const data = await parseShaderFile(path);
-           
-            header += data.header.trim() + "\n";
+            const data = await Preprocessor(path, scope);
 
-            body += data.body; 
-            
-            body = body.trimEnd();
-            body += "\n";
+            // 🔥 neue Header-Zeilen nur einfügen wenn noch nicht vorhanden
+            let m;
+            while ((m = HEADER_DECL_RE.exec(data.header)) !== null) {
+                const line = m[0].trim();
+                if (!scope.has(line)) {
+                    scope.add(line);
+                    header += line + "\n";
+                }
+            }
+
+            body += data.body.trimEnd() + "\n";
         }
+
 
         currentIndexToken++;
         currentToken = tokens[currentIndexToken];
