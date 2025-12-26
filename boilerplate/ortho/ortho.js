@@ -20,8 +20,9 @@ export default class OrthoScene {
         this.clock = new THREE.Clock();
         this.rendering = true;
         this.id = id;
-        this.mouse = new THREE.Vector2();
-        this.mouseVelocity = new THREE.Vector2();
+        this.mouse = new THREE.Vector2(0,0); // in NDC
+        this.mouseVelocity = new THREE.Vector2(0,0); // in NDC
+        this.resolution = new THREE.Vector2(this.w, this.h);
 
         
         this.setup();
@@ -39,12 +40,41 @@ export default class OrthoScene {
 
     async animate() {}
 
+    async mouse() {
+
+        this.renderer.domElement.addEventListener("mousemove", (e) => {
+            //void e.clientX;  0 ... x
+            //void e.clientY;  0 ... y
+
+            // -1 ... 1
+            const ndcX = (e.clientX / this.w) * 2 - 1;
+            const ndcY = -(e.clientY / this.h) * 2 - 1;
+
+            this.mouseVelocity.x = ndcX - this.mouse.x;
+            this.mouseVelocity.y = ndcY - this.mouse.y; 
+
+            this.mouse.x = ndcX;
+            this.mouse.y = ndcY; 
+
+        });
+
+    }
+
     async responsiv() {
 
-        window.addEventListener("resize", ()=>{
+        window.addEventListener("resize", () => {
 
-            if(this.isScreenX) this.w = window.innerWidth;
-            if(this.isScreenY) this.h = window.innerHeight;
+            if(this.isScreenX) {
+                this.w = window.innerWidth; 
+                this.resolution.x = this.w;
+            } 
+
+            if(this.isScreenY) {
+                this.h = window.innerHeight
+                this.resolution.y = this.h;
+            }
+
+
 
             this.camera.left = this.w / 2;
             this.camera.right = this.w / 2;
@@ -74,11 +104,10 @@ export default class OrthoScene {
         this.renderer.setAnimationLoop(this.animate.bind(this));
 
         this.parent.appendChild(this.renderer);
-        
         if(this.rendering) this.renderer.render(this.scene, this.camera);
 
 
-
+        this.mouse();
         this.responsiv();
     }
 
