@@ -37,15 +37,8 @@ export default class OrthoScene {
         this.rendering = true;
     }
 
-    async createObjs(){}
 
-    async animate() {
-
-
-        this.time = this.clock.getElapsedTime();
-    }
-
-    async mouse() {
+    async mousemove() {
 
         this.renderer.domElement.addEventListener("mousemove", (e) => {
             //void e.clientX;  0 ... x
@@ -81,7 +74,7 @@ export default class OrthoScene {
 
 
 
-            this.camera.left = this.w / 2;
+            this.camera.left = -this.w / 2;
             this.camera.right = this.w / 2;
             this.camera.top = this.h / 2;
             this.camera.bottom = -this.h / 2;
@@ -93,26 +86,27 @@ export default class OrthoScene {
     }
 
     async setup() {
+
+        console.log("setup");
         this.camera = new THREE.OrthographicCamera(
             - this.w / 2, 
             this.w / 2, 
             this.h / 2, 
             -this.h / 2, 
-            -10, 
-            10
+            0.0001, 
+            200
         );
         
-        this.camera.position.z = 2;
+        this.camera.position.z = 20;
         this.renderer = new THREE.WebGLRenderer({antialias: true});
         this.renderer.setSize(this.w, this.h);
         this.renderer.domElement.id = this.id;
-        this.renderer.setAnimationLoop(this.animate.bind(this));
 
-        this.parent.appendChild(this.renderer);
+        this.parent.appendChild(this.renderer.domElement);
         if(this.rendering) this.renderer.render(this.scene, this.camera);
 
 
-        this.mouse();
+        this.mousemove();
         this.responsiv();
     }
 
