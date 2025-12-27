@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boilerplate Ortho</title>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.181.2/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.181.2/examples/jsm/"
+        }
+      }
+    </script>
+
+    <script type="module" src="./custom_shader_font.js" defer></script>
+    <script src="../../boilerplate/ortho/ortho.js" defer type="module"></script>
+    <script src="../../util/text_sdf/src/Text.js" type="module" defer></script>
+    <script src="../../util/text_sdf/webgl/webgl_sdl_generator.js"></script>
+    <script src="../../util/text_sdf/libs/bidi.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+    </style>
+</head>
+<body>
