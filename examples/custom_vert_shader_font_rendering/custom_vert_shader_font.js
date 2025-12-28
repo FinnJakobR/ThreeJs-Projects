@@ -48,6 +48,15 @@ class BasicSdfFontScene extends OrthoScene {
         //   position.x = cos(theta) * r2;
         //   position.y = sin(theta) * r2;
         // `
+
+        // vertexTransform: `
+        //     float waveAmplitude = 1.0;
+        //     float waveX = uv.x * PI * 10.0 - mod(time / 100.0, PI2);
+        //     float waveZ = sin(waveX) * waveAmplitude;
+            
+        //     position.y += waveZ;
+
+        //     `,
         timeUniform: 'time',
         vertexTransform: `
           float frequency1 = 0.035;

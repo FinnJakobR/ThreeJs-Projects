@@ -44,6 +44,7 @@ position.xy = mix(bounds.xy, bounds.zw, clippedXY);
 
 uv = (position.xy - uTroikaTotalBounds.xy) / (uTroikaTotalBounds.zw - uTroikaTotalBounds.xy);
 
+
 float rad = uTroikaCurveRadius;
 if (rad != 0.0) {
   float angle = position.x / rad;
@@ -103,7 +104,7 @@ float troikaSdfValueToSignedDistance(float alpha) {
 
 float troikaGlyphUvToSdfValue(vec2 glyphUV) {
   vec2 textureUV = mix(vTroikaTextureUVBounds.xy, vTroikaTextureUVBounds.zw, glyphUV);
-  vec4 rgba = texture2D(uTroikaSDFTexture, textureUV);
+  vec4 rgba = texture2D(uTroikaSDFTexture, textureUV );
   float ch = floor(vTroikaTextureChannel + 0.5); //NOTE: can't use round() in WebGL1
   return ch == 0.0 ? rgba.r : ch == 1.0 ? rgba.g : ch == 2.0 ? rgba.b : rgba.a;
 }
