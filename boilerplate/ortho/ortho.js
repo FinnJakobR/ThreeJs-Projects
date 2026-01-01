@@ -9,7 +9,8 @@ export default class OrthoScene {
         this.w = w ? w : window.innerWidth;
         this.h = h ? h : window.innerHeight;
 
-        this.backgroundColor = backgroundColor;
+        this.backgroundColor = backgroundColor ?? 0x000000;
+
         this.parent = parent;
 
         this.isScreenX = w == window.innerWidth;
@@ -101,6 +102,8 @@ export default class OrthoScene {
         this.renderer = new THREE.WebGLRenderer({antialias: true});
         this.renderer.setSize(this.w, this.h);
         this.renderer.domElement.id = this.id;
+
+        this.scene.background = this.backgroundColor;
 
         this.parent.appendChild(this.renderer.domElement);
         if(this.rendering) this.renderer.render(this.scene, this.camera);
