@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boilerplate Ortho</title>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.181.2/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.181.2/examples/jsm/"
+        }
+      }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.1/dist/gsap.min.js"></script>
+
+    <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+        
+        body {
+            margin: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: black;
+            font-weight: bold;
+            overflow: hidden;
+            color: white;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        #main {
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #logo {
+            width: 10%;
+            height: auto;
+            min-width: 200px;
+            transform: scale(1.0);
+            transition: transform 3.0s cubic-bezier(1,0,1,0);
+
+        }
+
+        img {
+            height: 100%;
+            width: 100%;
+        }
+
+        .active {
+            transform: scale(180.0) !important;
+        }
+
+        #title {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            top: 0px;
+            left: 0px;
+            font-size: 200px;
+            text-align: center;
+        }
+
+        #content {
+            width: 100vw;
+            height: 100vh;
+            background-color: white;
+            opacity: 0;
+            position: absolute;
+            z-index: -10;
+            top: 0;
+            left: 0;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .activeContent {
+            opacity: 1 !important;
+        }
+
+        
+    </style>
+</head>
+<body>
+
+    <div id="main">
+
+        
+        <div id="logo">
+           <img src="./assets/001.png" alt="" srcset="">     
+        </div>
+
+        <div id="content" style="display: block;">HALLO</div>
+    </div>
+
+
+<script>
+    const x = document.getElementById("logo");
+    const img = x.children[0];
+
+     requestAnimationFrame(() => {
+        x.classList.add("active");
+    });
+
+
+    const length = 4;
+    const url = "./assets/00";
+
+    const colors = [
+            "#ed1d24",
+            "white",
+            "black",
+            "#746bab",
+            
+    ];
+
+    const speed = 1000 / 12; // 5 bilder die sec
+    const animLength  = 1.9 * 1000; // in sec
+    let i = 1;
+
+    const cssAnimLength = 3.2 * 1000;
+
+
+    const intervall = setInterval(() => {
+            const newColor = colors[(i % length)];
+            document.body.style.backgroundColor = newColor;        
+            const newImage = url + ((i % length) + 1) + ".png";
+            img.src = newImage;
+            i++;
+
+            document.body.style.backgroundColor = newColor;        
+        }, speed);
+
+    setTimeout(() => {
+        clearInterval(intervall)
+    }, animLength); 
+
+
+    setTimeout(() => {
+        
+        x.style.display = "none";
+        const content = document.getElementById("content");
+
+        content.style.display = "block";
+
+        requestAnimationFrame(()=> {
+            content.classList.add("activeContent");
+        });
+
+    }, cssAnimLength)
+
+</script>
+
+</body>
+</html> 

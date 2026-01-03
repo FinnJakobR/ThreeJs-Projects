@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boilerplate Ortho</title>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.181.2/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.181.2/examples/jsm/"
+        }
+      }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.1/dist/gsap.min.js"></script>
+    <script type="module" src="./js/main.js" defer></script>
+    <script type="module" src="./js/loading.js" defer></script>
+    <script src="./util/text_sdf/webgl/webgl_sdl_generator.js"></script>
+    <script src="./util/text_sdf/libs/bidi.js"></script>
+    <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+        
+        body {
+            margin: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: black;
+            font-weight: bold;
+            overflow: hidden;
+            color: white;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -10;
+            
+        }
+
+        #main {
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #logo {
+            width: 10%;
+            height: auto;
+            min-width: 200px;
+            transform: scale(1.0);
+            transition: transform 3.0s cubic-bezier(1,0,1,0);
+
+        }
+
+        img {
+            height: 100%;
+            width: 100%;
+        }
+
+        .active {
+            transform: scale(180.0) !important;
+        }
+
+        #title {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            top: 0px;
+            left: 0px;
+            font-size: 200px;
+            text-align: center;
+        }
+
+
+        .activeContent {
+            opacity: 1 !important;
+        }
+
+        
+    </style>
+</head>
+<body>
+
+    <div id="main">
+        
+        <div id="logo">
+           <img src="./assets/001.png" alt="" srcset="">     
+        </div>
+
+    </div>
+
+
+
+</body>
+</html> 
