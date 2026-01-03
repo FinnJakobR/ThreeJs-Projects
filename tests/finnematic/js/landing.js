@@ -268,6 +268,13 @@ class Landing {
 
     constructor(text) {
         this.text = text;
+        this.index = 0;
+        this.length = 1;
+
+        this.clicked = 0;
+
+        this.urls = ["https://movies.finnematic.com/"];
+
         this.scene = new LandingScene(
             {
                 text: text,
@@ -278,7 +285,23 @@ class Landing {
                 backgroundColor: new THREE.Color(0x0000 )//0xff0000 
             }
         ); 
+    
+        this.click();
     }
+
+
+    click() {
+        
+        document.body.addEventListener("click", () => {
+            this.index = this.clicked % this.length;
+            window.location.href = this.urls[this.index];
+            this.clicked ++;
+        });
+
+    }
+
+
+
 
 }
 

@@ -8,6 +8,8 @@ const main = async () => {
     await loading();
     render();
 
+    
+
 };
 
 main();
