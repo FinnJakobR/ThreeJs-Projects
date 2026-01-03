@@ -30,8 +30,8 @@ class LandingScene extends OrthoScene {
 
     async init(){
 
-        const fragmentShader = await readFile("../../shaders/fragment/glitch.glsl");
-        const vertexShader = await readFile("../../shaders/vertex/basic.glsl");
+        const fragmentShader = await readFile("shaders/fragment/glitch.glsl");
+        const vertexShader = await readFile("shaders/vertex/basic.glsl");
 
         const glitchShader = {
         uniforms: {
@@ -82,7 +82,7 @@ class LandingScene extends OrthoScene {
 
         const t = new Text();
         t.text = this.text;
-        t.font = "../../util/fonts/SplineSansMono-Medium.ttf";
+        t.font = "./util/fonts/SplineSansMono-Medium.ttf";
         t.fontSize = Math.floor(window.innerWidth / (this.text.length * 0.9));
         t.color = "#ffffff";
         t.anchorX = "center";
