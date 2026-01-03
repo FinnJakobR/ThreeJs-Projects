@@ -5,11 +5,17 @@ uniform vec2 resolution;
 varying vec2 vUv;
 
 float generateGrain(){
-    float amount = 0.4;
+    float baseAmount = 0.2;
+
+    // gleiche Grain-Größe
+    vec2 n = floor(vUv * 800.0) / 800.0;
+
+    // gleiche Grain-Intensität
+    float scale = 800.0 / length(resolution);
+    float amount = baseAmount * scale;
 
     float randomIntensity = fract(
-        sin(dot(vec2(gl_FragCoord.x, gl_FragCoord.y) * (time / 400.0),
-        vec2(12.9898,78.233)))
+        sin(dot(n + time, vec2(12.9898,78.233)))
         * 43758.5453398398
     );
 
@@ -34,7 +40,7 @@ void main() {
 
     vec2 uv = vUv;
 
-    float g = generateGrain();
+    
 
     vec2 s = shake(0.9);
 
@@ -71,9 +77,10 @@ void main() {
         color = texture2D(scene, mirrorUV);
 
     } else {
-
         color = texture2D(scene, uv + s);
     }
+
+    float g = generateGrain();
 
     // ========================
     // GLITCH INVERT
